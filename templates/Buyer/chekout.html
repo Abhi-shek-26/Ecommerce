@@ -1,0 +1,95 @@
+{% extends 'Buyer/buyer_base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<!-- Messages -->
+{% if messages %}
+  {% for message in messages %}
+    <div class="alert
+        {% if message.tags == 'error' %} alert-danger
+        {% elif message.tags == 'success' %} alert-success
+        {% elif message.tags == 'warning' %} alert-warning
+        {% else %} alert-info {% endif %}
+        alert-dismissible fade show"
+        role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  {% endfor %}
+{% endif %}
+
+<div class="container-fluid pt-4 px-4">
+
+    <div class="row mb-4">
+        <div class="col-12 text-center">
+            <h2>Checkout</h2>
+        </div>
+    </div>
+
+    <div class="row g-4">
+
+        <!-- Product / Cart Card -->
+        <div class="col-md-4">
+            <div class="card h-100">
+
+                {% if cart %}
+                    {% if cart.addproduct.image %}
+                        <img src="{{ cart.addproduct.image.url }}"
+                             class="card-img-top"
+                             style="height:280px; object-fit:cover;">
+                    {% endif %}
+
+                    <div class="card-body text-center">
+                        <p class="text-muted">{{ cart.addproduct.productname }}</p>
+                        <p class="text-muted">₹ {{ cart.addproduct.price }}</p>
+                        <p class="small text-secondary">{{ cart.addproduct.category }}</p>
+                    </div>
+
+                {% elif product %}
+                    {% if product.image %}
+                        <img src="{{ product.image.url }}"
+                             class="card-img-top"
+                             style="height:280px; object-fit:cover;">
+                    {% endif %}
+
+                    <div class="card-body text-center">
+                        <p class="text-muted">{{ product.productname }}</p>
+                        <p class="text-muted">₹ {{ product.price }}</p>
+                        <p class="small text-secondary">{{ product.category }}</p>
+                    </div>
+                {% else %}
+                    <div class="card-body text-center text-muted">
+                        <p>No product selected</p>
+                    </div>
+                {% endif %}
+
+            </div>
+        </div>
+
+        <!-- Address Form -->
+        <div class="col-md-8">
+            <div class="card h-100">
+                <div class="card-header bg-success text-white text-center">
+                    <h5 class="mb-0">Delivery Address</h5>
+                </div>
+
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+
+                        <div class="text-center mt-3">
+                            <button type="submit" class="btn btn-success btn-lg px-5">
+                                Place Order
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

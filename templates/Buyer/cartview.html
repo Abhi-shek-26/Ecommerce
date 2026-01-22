@@ -1,0 +1,48 @@
+{% extends 'Buyer/buyer_base.html' %}
+
+{% block content %}
+<div class="container-fluid pt-4 px-4">
+    <div class="row">
+        <div class="col-12 text-center">
+            <h1>My Cart</h1>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        {% for product in data %}
+        <div class="col-lg-3 col-md-4 col-sm-6 mb-4 d-flex justify-content-center">
+            <div class="card h-100" style="width: 18rem;">
+
+                <img src="{{ product.addproduct.image.url }}"
+                     class="card-img-top"
+                     style="height:280px; object-fit:cover;">
+
+                <div class="card-body text-center">
+                    <h5 class="card-title">{{ product.addproduct.productname }}</h5>
+                </div>
+
+                <ul class="list-group list-group-flush text-center">
+                    <li class="list-group-item">₹ {{ product.addproduct.price }}</li>
+                    <li class="list-group-item">{{ product.addproduct.category }}</li>
+                    <li class="list-group-item"> Only {{ product.addproduct.count }} left</li>
+                </ul>
+
+                <div class="card-body d-flex justify-content-center gap-2">
+                    <a href="{% url 'BuyNowCart' product.id %}"
+                       class="btn btn-success">
+                        Buy Now
+                    </a>
+                    <a href="{% url 'delete_cart' product.id %}"
+                       class="btn btn-danger btn-sm">
+                        Remove
+                    </a>
+                </div>
+
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-center">Your cart is empty</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

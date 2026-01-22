@@ -1,0 +1,32 @@
+{% extends 'Seller/seller_base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container-fluid pt-4 px-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white text-center">
+                    <h5 class="mb-0">Add New Product</h5>
+                </div>
+
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ ProductForm|crispy }}
+
+                        <div class="text-center mt-4">
+                            <button type="submit" class="btn btn-success px-5">
+                                Post Product
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

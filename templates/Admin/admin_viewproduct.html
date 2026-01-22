@@ -1,0 +1,64 @@
+{% extends 'Admin/admin_base.html' %}
+
+{% block content %}
+<div class="container-fluid pt-4 px-4">
+
+    <div class="row mb-4">
+        <div class="col-12 text-center">
+            <h1>Products</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="table-responsive">
+
+                <table class="table table-bordered table-hover align-middle text-center">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Image</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Price</th>
+                            <th>Category</th>
+                            <th>Stock</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for product in products %}
+                        <tr>
+                            <td>
+                                {% if product.image %}
+                                    <img src="{{ product.image.url }}"
+                                         alt="{{ product.productname }}"
+                                         style="height:80px; width:80px; object-fit:cover;">
+                                {% endif %}
+                            </td>
+                            <td>{{ product.productname }}</td>
+                            <td>{{ product.description|truncatewords:15 }}</td>
+                            <td>₹ {{ product.price }}</td>
+                            <td>{{ product.category }}</td>
+                            <td>
+                                {% if product.count > 0 %}
+                                    <span class="badge bg-success">{{ product.count }}</span>
+                                {% else %}
+                                    <span class="badge bg-danger">Out of Stock</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="6" class="text-muted">No products available</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
